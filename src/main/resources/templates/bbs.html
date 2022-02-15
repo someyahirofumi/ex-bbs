@@ -14,11 +14,11 @@
 <div th:each="list:${articleList}">
 投稿者名：<span th:text="${list.name}">dummy</span><br>
 投稿内容:<pre><span th:text="${list.content}"></span></pre> 
-<form th:action="@{/ex-bbs/delte-article}" method="post">
+<form th:action="@{/ex-bbs/delete-article?id=}+${list.id}" method="post">
 <button>投稿削除</button>
 </form><br>
 
-<div th:each="commentList:${commentList}">
+<div th:each="commentList:${list.commentList}">
 コメント者名:<span th:text="${commentList.name}">dummy</span><br>
 コメント内容:<pre><span th:text="${commentList.content}">dummy</span></pre>
 </div>

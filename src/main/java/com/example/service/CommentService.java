@@ -28,5 +28,7 @@ public class CommentService {
 	public void deleteByArticleId(int articleId) {
 		repository.deleteByArticleId(articleId);
 	}
+	
+
 
 }

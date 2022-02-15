@@ -38,17 +38,15 @@ public class ArticleController {
 	@RequestMapping("")
 	public String index(Model model) {
 		 List<Article>list=articleService.findAll();
-		model.addAttribute("articleList",list);
 		
+		List<Comment> commentList= new ArrayList<>();
+		for(Article article:list) {
+			commentList=commentService.findByArticleId(article.getId());
+			article.setCommentList(commentList);
+			}
 		
 	
-		List<Comment> commentList=new ArrayList<>();
-		for(Article articleList:list) {
-			commentList.addAll(commentService.findByArticleId(articleList.getId()));
-			
-		}
-		model.addAttribute("commentList",commentList);
-		
+		model.addAttribute("articleList",list);
 		return "bbs";
 	}
 	
@@ -61,7 +59,7 @@ public class ArticleController {
 		articleService.insert(article);
 		
 		
-		return "bbs";
+		return "forward:/ex-bbs";
 		
 	}
 	
@@ -77,8 +75,11 @@ public class ArticleController {
 	}
 	
 	@RequestMapping("delete-article")
-	public String deleteArticle() {
-		return"bbs";
+	public String deleteArticle(Integer id) {
+		commentService.deleteByArticleId(id);
+		articleService.deleteById(id);
+		
+		return "forward:/ex-bbs";
 	}
 
 }

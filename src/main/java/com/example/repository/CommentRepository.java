@@ -21,7 +21,7 @@ public class CommentRepository {
 	private static final RowMapper<Comment> COMMENT_ROW_MAPPER=new BeanPropertyRowMapper<>(Comment.class);
 
 	public List<Comment> findByArticleId(int articleId){
-		String sql="SELECT * FROM comments WHERE article_id = :articleId　ORDER BY id desc;";
+		String sql="SELECT * FROM comments WHERE article_id = :articleId ORDER BY id desc;";
 		SqlParameterSource param =new MapSqlParameterSource().addValue("articleId", articleId);
 		List<Comment>list= template.query(sql, param,COMMENT_ROW_MAPPER);
 		return list;
@@ -31,6 +31,13 @@ public class CommentRepository {
 		String sql="INSERT INTO comments(name,content,article_id) VALUES(:name,:content,:articleId);";
 		SqlParameterSource param=new MapSqlParameterSource().addValue("name", comment.getName()).addValue("content", comment.getContent()).addValue("articleId", comment.getArticleId());
 		template.update(sql, param);
+	}
+	
+	public void deleteByArticleId(Integer articleId) {
+		String sql="DELETE FROM comments WHERE article_id=:articleId;";
+		SqlParameterSource param =new MapSqlParameterSource("articleId",articleId);
+		template.update(sql, param);
+		
 	}
 	
 }
