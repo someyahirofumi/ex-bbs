@@ -17,14 +17,7 @@ public class ArticleService {
 	@Autowired
 	private ArticleRepository repository;
 	
-	public List<Article> findAll(){
-		System.out.println("findall呼び出し");
-		
-		List<Article> list = repository.findAll();
-		return list;
-		
-		
-	}
+	
 	
 	public void insert(Article article) {
 		repository.insert(article);
@@ -32,6 +25,10 @@ public class ArticleService {
 	
 	public void deleteById(int id) {
 		repository.deleteById(id);
+	}
+	
+	public List<Article> findAll2(){
+		return repository.findAll2();
 	}
 
 }
